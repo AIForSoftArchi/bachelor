@@ -15,7 +15,7 @@ anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
 
 
 ## Claude API
-import anthropic # type: ignore
+import anthropic
 
 
 ### checking if the API key is correctly loaded
@@ -60,9 +60,13 @@ def error_handling_wrapper(api_function, *args, **kwargs):
 
     return None  # Return None if an error occurs
 
-def ClaudeAPI(input_text):
+def ClaudeAPI(input_json, assistant_settings=None):
     """
     This function is for calling the ClaudeAPI
+
+    input:
+        input_json: Json file, that is one or more user and assistant text messagess
+        assistant_settings: String, Extra parameters on how the API should either behave or respond. Default is None
 
     returns: an response from Claude, or None if error occurs
     """
@@ -73,22 +77,14 @@ def ClaudeAPI(input_text):
         model="claude-3-5-sonnet-20241022",
         max_tokens=1000,
         temperature=0,
-        system="You are a world-class programmer. Respond only with code.",
+        system=f"You are a world-class programmer. {assistant_settings}",
         messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": input_text
-                    }
-                ]
-            }
+            input_json
         ]
     )
 
 
-testResponse = ClaudeAPI("Make a function that finds the square root of a given number, and has error handling.")
+testResponse = ClaudeAPI({"role": "user", "content": "Make a *What's up world* print function" }, "Respond only with code")
 if testResponse:
     print(testResponse.content)
 else:
