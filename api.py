@@ -60,12 +60,12 @@ def error_handling_wrapper(api_function, *args, **kwargs):
 
     return None  # Return None if an error occurs
 
-def ClaudeAPI(input_json, assistant_settings=None):
+def ClaudeAPI(input_list, assistant_settings=None):
     """
     This function is for calling the ClaudeAPI
 
     input:
-        input_json: Json file, that is one or more user and assistant text messagess
+        input_list: List of Json file objects, that is one or more user and assistant text messages
         assistant_settings: String, Extra parameters on how the API should either behave or respond. Default is None
 
     returns: an response from Claude, or None if error occurs
@@ -78,14 +78,19 @@ def ClaudeAPI(input_json, assistant_settings=None):
         max_tokens=1000,
         temperature=0,
         system=f"You are a world-class programmer. {assistant_settings}",
-        messages=[
-            input_json
-        ]
+        messages= input_list
     )
 
 
-testResponse = ClaudeAPI({"role": "user", "content": "Make a *What's up world* print function" }, "Respond only with code")
+testResponse = ClaudeAPI([{"role": "user", "content": "Make a *What's up world* print function" }, ], "Respond only with code")
 if testResponse:
     print(testResponse.content)
+else:
+    print("Claude API call failed.")
+
+
+testMultiArgsResponse = ClaudeAPI([{"role": "user", "content": """Make a "What's up world" print function""" }, {"role": "assistant", "content":"""```python\ndef print_whats_up():\n    print("What\'s up world!")\n```"""}, {"role": "user", "content":"I want the function to be recursive, and call itself 5 times."}], "Respond only with code")
+if testMultiArgsResponse:
+    print(testMultiArgsResponse.content)
 else:
     print("Claude API call failed.")
