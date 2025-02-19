@@ -18,8 +18,9 @@ def main():
 
   # Define a list of relative paths (this should probably be done dynamically based on the base_dir)
   relative_paths = [
-      "testFiles/todolist.cs",
-      "testFiles/extrafile.txt",
+      "architectureViolation\Domain\entities\Customer.cs",
+      "architectureViolation\Application\Services\CustomerService.cs",
+      "architectureViolation\Infrastructure\Data\CustomerRepository.cs"
   ]
 
   # Generate full file paths dynamically
@@ -36,7 +37,7 @@ def main():
 
   finalPrompt = parser.StringToPrompt(promptString)
 
-  answer = api.CreateComplianceReport(finalPrompt)
+  answer = api.CreateComplianceReportArchitecture(finalPrompt)
 
   print(answer.content)
     

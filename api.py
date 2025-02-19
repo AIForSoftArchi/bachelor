@@ -87,9 +87,18 @@ def ClaudeAPI(input_list, assistant_settings=None):
         messages= input_list
     )
 
-def CreateComplianceReport(input_list, chosen_API=APIChoice.CLAUDE):
+def CreateComplianceReportSyntax(input_list, chosen_API=APIChoice.CLAUDE):
     if chosen_API == APIChoice.CLAUDE:
-        return ClaudeAPI(input_list, "You are also a master at analysing the compliance of code, in accordance to if it is syntactically correct. You shall return a list of what is syntactically wrong with the code given to you, and return nothing else than the list, where each point in the list corresponds to one single syntactically incorrect mistake.")
+        return ClaudeAPI(input_list, "You are also a master at analysing the compliance of code, in accordance to if it is syntactically correct. You shall return a list of what is syntactically wrong with the code given to you, and return nothing else than the list, where each point in the list corresponds to one single syntactically incorrect mistake. Do not mix content between files, unless doing so for the purpose of upholding the principles of software architecture, and explicitly asked to do so.")
+    elif chosen_API == APIChoice.CHATGPT:
+        raise NotImplementedError("ChatGPT support is not implemented yet.")
+    
+    else:
+        raise ValueError(f"Invalid API choice: {chosen_API}")
+
+def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
+    if chosen_API == APIChoice.CLAUDE:
+        return ClaudeAPI(input_list, """I will give you some code files, where I will start by giving the relative path, and then the code. Each file starts with '### START FILE: <filename> ###' and ends with '### END FILE: <filename> ###'. You should now decide if these files and their placement in the folders have compliance of the code architecture "Onion", in accordance to if it upholds these standards. You shall return a list of what is wrong according to the "Onion" architecture with the code given to you, and return nothing else than the list, where each point in the list corresponds to one single violation of the Onion architecture. You should be focusing on dependency flow, layer responsibilities, and domain isolation. Your analysis will be precise and actionable, highlighting only genuine architectural violations, and naming the exact files involved, and the specific principle being violated. If no violations are found, return "No vioolations found." """)
     elif chosen_API == APIChoice.CHATGPT:
         raise NotImplementedError("ChatGPT support is not implemented yet.")
     
@@ -112,7 +121,7 @@ def CreateComplianceReport(input_list, chosen_API=APIChoice.CLAUDE):
 #     print("Claude API call failed.")
 
 
-# testComplianceReport = CreateComplianceReport([{"role": "user", "content": """print "Hello, world!" """ } ], APIChoice.CLAUDE) #Currently for testing purposes it creates a compliance report on if code is syntactically correct
+# testComplianceReport = CreateComplianceReportSyntax([{"role": "user", "content": """print "Hello, world!" """ } ], APIChoice.CLAUDE) #Currently for testing purposes it creates a compliance report on if code is syntactically correct
 # if testComplianceReport:
 #     print(testComplianceReport.content)
 # else:

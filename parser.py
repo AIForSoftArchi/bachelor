@@ -32,7 +32,7 @@ def strutureJSONToString(input):
         finalstring = finalstring + f"{file['file_path']} \n"
     
 
-    finalstring = finalstring + "\n And following is the code from the files: \n\n"
+    finalstring = finalstring + "\n And following is the code from the files. Each file starts with '### START FILE: <filename> ###' and ends with '### END FILE: <filename> ###'. \n\n"
 
 
     # Give the code from each file.
