@@ -1,4 +1,10 @@
+# Bachelor project, spring semester 2025
+# Created by Mads Nørklit Jensen & Casper Storm Frøding
+# Supervisor: Paolo Tell
+# University: IT-University of Copenhagen
+
 # Our entry point for the execution
+
 import file_handler as fh
 import os
 
@@ -8,7 +14,7 @@ def main():
   # Dynamically determine the base directory of the script
   base_dir = os.path.dirname(os.path.abspath(__file__))  # Gets the script's directory
 
-  # Define a list of relative paths (relative to the script's location)
+  # Define a list of relative paths (this should probably be done dynamically based on the base_dir)
   relative_paths = [
       "testFiles/todolist.cs",
       "testFiles/extrafile.txt",
@@ -28,7 +34,3 @@ def main():
 # This ensures that main() only runs when the script is executed directly
 if __name__ == "__main__":
     main()
-# Bachelor project, spring semester 2025
-# Created by Mads Nørklit Jensen & Casper Storm Frøding
-# Supervisor: Paolo Tell
-# University: IT-University of Copenhagen
