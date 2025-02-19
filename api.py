@@ -23,6 +23,12 @@ if not anthropic_api_key:
     raise ValueError("anthropic API Key Not Found! Make sure to set it in the .env file.")
 
 
+# Define an Enum for API choices
+from enum import Enum
+class APIChoice(Enum):
+    CLAUDE = "Claude"
+    CHATGPT = "ChatGPT"
+
 def error_handling_wrapper(api_function, *args, **kwargs):
     """
     Generic error handling wrapper for all kinds of API calls
@@ -81,8 +87,18 @@ def ClaudeAPI(input_list, assistant_settings=None):
         messages= input_list
     )
 
+def CreateComplianceReport(input_list, chosen_API=APIChoice.CLAUDE):
+    if chosen_API == APIChoice.CLAUDE:
+        return ClaudeAPI(input_list, "You are also a master at analysing the compliance of code, in accordance to if it is syntactically correct. You shall return a list of what is syntactically wrong with the python code given to you, and return nothing else than the list, where each point in the list corresponds to one single syntactically incorrect mistake.")
+    elif chosen_API == APIChoice.CHATGPT:
+        raise NotImplementedError("ChatGPT support is not implemented yet.")
+    
+    else:
+        raise ValueError(f"Invalid API choice: {chosen_API}")
 
-testResponse = ClaudeAPI([{"role": "user", "content": "Make a *What's up world* print function" }, ], "Respond only with code")
+
+
+testResponse = ClaudeAPI([{"role": "user", "content": "Make a *What's up world* print function" } ], "Respond only with code")
 if testResponse:
     print(testResponse.content)
 else:
@@ -92,5 +108,12 @@ else:
 testMultiArgsResponse = ClaudeAPI([{"role": "user", "content": """Make a "What's up world" print function""" }, {"role": "assistant", "content":"""```python\ndef print_whats_up():\n    print("What\'s up world!")\n```"""}, {"role": "user", "content":"I want the function to be recursive, and call itself 5 times."}], "Respond only with code")
 if testMultiArgsResponse:
     print(testMultiArgsResponse.content)
+else:
+    print("Claude API call failed.")
+
+
+testComplianceReport = CreateComplianceReport([{"role": "user", "content": """print "Hello, world!" """ } ], APIChoice.CLAUDE) #Currently for testing purposes it creates a compliance report on if code is syntactically correct
+if testComplianceReport:
+    print(testComplianceReport.content)
 else:
     print("Claude API call failed.")
