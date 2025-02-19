@@ -1,7 +1,14 @@
 #Parsing of the response from the API.
 
-def StringToJSON(input):
-    temp = []
+def StringToPrompt(input):
+    """
+        Creates the prompt that the API should use.
+
+        param input: String for the prompt
+
+        return: List of a single JSON object that is the prompt.
+    """
+    return [{"role": "user", "content": input } ]
 
 def StringToJSONList(inputString, seperator = None):
     tempList = inputString.splitlines()
@@ -18,7 +25,7 @@ def strutureJSONToString(input):
 
     """
     amountOfElements = len(input)
-    finalstring = f"I have {amountOfElements} files I am giving you here. First i will give you the relative paths for the files, and then i will give the code in these files. \n"
+    finalstring = f"I have {amountOfElements} files I am giving you here. First I will give you the relative paths for the files, and then I will give the code in these files. \n"
 
     # Give the relative paths
     for file in input:

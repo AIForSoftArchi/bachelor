@@ -6,6 +6,8 @@
 # Our entry point for the execution
 
 import file_handler as fh
+import parser
+import api
 import os
 
 def main():
@@ -28,7 +30,15 @@ def main():
       print(f" - {path}")
 
   # Call function with dynamically generated file paths
-  fh.process_files(file_paths)
+  tempList = fh.process_files(file_paths)
+
+  promptString = parser.strutureJSONToString(tempList)
+
+  finalPrompt = parser.StringToPrompt(promptString)
+
+  answer = api.CreateComplianceReport(finalPrompt)
+
+  print(answer.content)
     
 
 # This ensures that main() only runs when the script is executed directly

@@ -6,7 +6,7 @@ class ToDoListApp
 {
     static string filePath = "tasks.txt";
     static List<string> tasks = new List<string>();
-    
+
     static void Main()
     {
         LoadTasks();
@@ -43,7 +43,7 @@ class ToDoListApp
         }
         else
         {
-            Console.WriteLine("Task cannot be empty!");
+            Console.WriteLine("Task cannot be empty!";
         }
         Console.ReadLine();
     }

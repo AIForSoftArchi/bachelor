@@ -31,7 +31,7 @@ def process_files(file_paths, output_file="file_for_parser.json"):
         json_output = {
             "file_path": relative_path,  # Store relative path instead of absolute
             "file_name": os.path.basename(file_name),
-            "content": "".join(lines)  # Merge lines while keeping newlines
+            "contents": "".join(lines)  # Merge lines while keeping newlines
         }
 
         all_files_data.append(json_output)  # Add file data to list
