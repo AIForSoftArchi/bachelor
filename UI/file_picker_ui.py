@@ -8,6 +8,7 @@ selected_files = []
 
 def open_files():
     """Opens file dialog and updates UI with selected files."""
+    print("Entered open_files")
     global selected_files   
     file_paths = filedialog.askopenfilenames(title="Select Files for analysis")
     if file_paths:
@@ -24,15 +25,17 @@ def open_files():
             file_label = ck.CTkLabel(scrollable_frame, text=file, anchor="w", justify="left")
             file_label.pack(fill="x", padx=10, pady=2)
 
-def submit_files():
+def submit_files(root):
     """Returns selected files and closes UI."""
+    print("Entered submit_files")
     if selected_files:
         print("Files Submitted:", selected_files)  # Process files as needed
         root.destroy()  # Close the application window
     return selected_files
 
-def on_window_close():
+def on_window_close(root):
     """Handles window closing event with a confirmation dialog."""
+    print("Window close event triggered.")
     confirm = messagebox.askyesno("Exit Confirmation", "Are you sure you want to close without submitting?")
     if confirm:
         print("Window closed without submitting files.")
@@ -40,21 +43,21 @@ def on_window_close():
         root.destroy()  # Close the application window
     else:
         print("Close action canceled.")
+        root.destroy()
 
-def launch_file_picker():
+def launch_file_picker(root):
     """
-        Launches the file picker UI with a scrollable frame.
-        
-        return: List of paths to selected files    
+    Launches the file picker UI with a scrollable frame.
+    
+    return: List of paths to selected files    
     """
-    global root, scrollable_frame
-
-    # Create main window
-    root = ck.CTk()  
+    print("Entered launch_file_picker")
+    global scrollable_frame
+    
     root.title("Multi-File Picker")
     root.geometry("500x400")
     
-    root.protocol("WM_DELETE_WINDOW", on_window_close)  # Handle close event
+    root.protocol("WM_DELETE_WINDOW", lambda: on_window_close(root))  # Handle close event
 
     # Create button to open file dialog
     open_button = ck.CTkButton(root, text="Choose Files", command=open_files)
@@ -65,10 +68,10 @@ def launch_file_picker():
     scrollable_frame.pack(pady=10, padx=10, fill="both", expand=True)
 
     # Create submit button
-    submit_button = ck.CTkButton(root, text="Submit files for analysis", command=submit_files)
+    submit_button = ck.CTkButton(root, text="Submit files for analysis", command=lambda: submit_files(root))
     submit_button.pack(pady=10)
 
-    # Run application
+    # Run the application
     root.mainloop()
 
     return selected_files  # Return selected files after UI closes
