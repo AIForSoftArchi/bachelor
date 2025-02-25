@@ -39,8 +39,13 @@ def main():
 
   answer = api.CreateComplianceReportArchitecture(finalPrompt)
 
-  print(answer.content)
-    
+  answerText = parser.ListWithTextBlockToString(answer.content)
+
+  reportList = parser.split_numbered_points(answerText)
+
+  # Display the results
+  for point in reportList:
+    print(f"{point}\n")
 
 # This ensures that main() only runs when the script is executed directly
 if __name__ == "__main__":

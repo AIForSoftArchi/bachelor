@@ -1,5 +1,8 @@
 #Parsing of the response from the API.
 
+## for Reg-ex parsing
+import re
+
 def StringToPrompt(input):
     """
         Creates the prompt that the API should use.
@@ -41,3 +44,38 @@ def strutureJSONToString(input):
 
 
     return finalstring
+
+def ListWithTextBlockToString(theList):
+    """
+    extracts the text from a List with a TextBlock object inside it.
+
+    param theList: List with a TextBlock object inside it
+
+    output: A string
+    """
+    return theList[0].text
+
+
+def split_numbered_points(text):
+    """
+    Splits a string into a list based on numbers followed by a dot.
+
+    Args:
+        text (string): The input string to split.
+
+    Returns:
+        list: A list of points extracted from the string.
+    """
+
+    pattern = r"(?=\d+\.\s)"
+
+    # Split the text at each numbered point
+    raw_points = re.split(pattern, text)
+
+    # Remove any empty strings and format each point
+    points = []
+    for point in raw_points:
+        if point.strip():  # Ensure the point is not empty
+            points.append(f"{point.strip()}")
+
+    return points

@@ -97,6 +97,15 @@ def CreateComplianceReportSyntax(input_list, chosen_API=APIChoice.CLAUDE):
         raise ValueError(f"Invalid API choice: {chosen_API}")
 
 def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
+    """
+    This function is for creating the Compliance report
+
+    input:
+        input_list: List of Json file objects, that is one or more user and assistant text messages
+        chosen_API: ENum, which API should be used to create this. Default is Claude.
+
+    returns: an Compliance report from Claude(A list with a TextBlock inside it), or None if error occurs
+    """
     if chosen_API == APIChoice.CLAUDE:
         return ClaudeAPI(input_list, """I will give you some code files, where I will start by giving the relative path, and then the code. Each file starts with '### START FILE: <filename> ###' and ends with '### END FILE: <filename> ###'. You should now decide if these files and their placement in the folders have compliance of the code architecture "Onion", in accordance to if it upholds these standards. You shall return a list of what is wrong according to the "Onion" architecture with the code given to you, and return nothing else than the list, where each point in the list corresponds to one single violation of the Onion architecture. You should be focusing on dependency flow, layer responsibilities, and domain isolation. Your analysis will be precise and actionable, highlighting only genuine architectural violations, and naming the exact files involved, and the specific principle being violated. If no violations are found, return "No vioolations found." """)
     elif chosen_API == APIChoice.CHATGPT:
@@ -104,7 +113,6 @@ def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
     
     else:
         raise ValueError(f"Invalid API choice: {chosen_API}")
-
 
 
 # testResponse = ClaudeAPI([{"role": "user", "content": "Make a *What's up world* print function" } ], "Respond only with code")
