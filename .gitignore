@@ -1,3 +1,4 @@
 claude-env/
 .env
 __pycache__
+file_for_parser.json
