@@ -9,26 +9,35 @@ import file_handler as fh
 import parser
 import api
 import os
+from UI.file_picker_ui import launch_file_picker  # Import the function
 
 def main():
   print("Main started")
   
   # Dynamically determine the base directory of the script
   base_dir = os.path.dirname(os.path.abspath(__file__))  # Gets the script's directory
-
-  # Define a list of relative paths (this will be replaced by the user inputting file paths or simply the files themselves?)
-  relative_paths = [
-      "architectureViolation\Domain\entities\Customer.cs",
-      "architectureViolation\Application\Services\CustomerService.cs",
-      "architectureViolation\Infrastructure\Data\CustomerRepository.cs"
-  ]
-
+  
+  selected_files = launch_file_picker()
+  
+  if not selected_files:
+      print("No files selected. Exiting...")
+      return
+  
+  relative_paths = []
+  for path in selected_files:
+      try: 
+          relative_path = os.path.relpath(path, base_dir)
+          relative_paths.append(relative_path)
+      except ValueError:
+          print(f"Warning: Could not convert {path} to a relative path.")
+          relative_paths.append(path)  # Fallback to absolute if an error occurs
+  
+  print("Processing files:")
+  for path in relative_paths:
+      print(f" - {path}")
+      
   # Generate full file paths dynamically
   file_paths = [os.path.join(base_dir, rel_path) for rel_path in relative_paths]
-
-  print("Processing files:")
-  for path in file_paths:
-      print(f" - {path}")
 
   # Call function with dynamically generated file paths
   tempList = fh.process_files(file_paths)
