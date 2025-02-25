@@ -3,7 +3,7 @@
 import json
 import os
 
-def process_files(file_paths, output_file="file_for_parser.json"):
+def process_files(file_paths):
   """
     Reads one or multiple files and returns a JSON object with relative paths and contents.
 
@@ -41,10 +41,6 @@ def process_files(file_paths, output_file="file_for_parser.json"):
         }
 
         all_files_data.append(json_output)  # Add file data to list
-
-    # Write the complete output once, not inside the loop (is only for testing purpose)
-    with open(output_file, "w", encoding="utf-8") as jsonfile:
-        json.dump(all_files_data, jsonfile, indent=4)
 
     print(f"All files processed successfully.")
 
