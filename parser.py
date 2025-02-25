@@ -67,15 +67,9 @@ def split_numbered_points(text):
         list: A list of points extracted from the string.
     """
 
-    pattern = r"(?=\d+\.\s)"
+    pattern = r"(?<!\d)(\d+\.\s.*?)(?=\n\d+\.\s|\Z)"
 
-    # Split the text at each numbered point
-    raw_points = re.split(pattern, text)
+    # Find all numbered points in the text
+    points = re.findall(pattern, text, re.DOTALL)
 
-    # Remove any empty strings and format each point
-    points = []
-    for point in raw_points:
-        if point.strip():  # Ensure the point is not empty
-            points.append(f"{point.strip()}")
-
-    return points
+    return [point.strip() for point in points]
