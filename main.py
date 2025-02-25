@@ -16,7 +16,7 @@ def main():
   # Dynamically determine the base directory of the script
   base_dir = os.path.dirname(os.path.abspath(__file__))  # Gets the script's directory
 
-  # Define a list of relative paths (this should probably be done dynamically based on the base_dir)
+  # Define a list of relative paths (this will be replaced by the user inputting file paths or simply the files themselves?)
   relative_paths = [
       "architectureViolation\Domain\entities\Customer.cs",
       "architectureViolation\Application\Services\CustomerService.cs",

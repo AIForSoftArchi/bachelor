@@ -4,7 +4,13 @@ import json
 import os
 
 def process_files(file_paths, output_file="file_for_parser.json"):
-  """Reads one or multiple files and returns a JSON object with relative paths and contents."""
+  """
+    Reads one or multiple files and returns a JSON object with relative paths and contents.
+
+    param input: List containing file paths
+
+    return: List of a single JSON object that is the prompt.
+  """
   try:
     all_files_data = []  # Store data for multiple files
 
@@ -40,7 +46,7 @@ def process_files(file_paths, output_file="file_for_parser.json"):
     with open(output_file, "w", encoding="utf-8") as jsonfile:
         json.dump(all_files_data, jsonfile, indent=4)
 
-    print(f"All files processed successfully. JSON written to: {output_file}")
+    print(f"All files processed successfully.")
 
     return all_files_data  # Return the full list of JSON objects
 
