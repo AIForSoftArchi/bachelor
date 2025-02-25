@@ -1,5 +1,5 @@
 import customtkinter as ck
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 
 ck.set_default_color_theme("green")
 ck.set_appearance_mode("light")
@@ -22,6 +22,16 @@ def submit_files():
         print("Files Submitted:", selected_files)  # Process files as needed
         root.destroy()  # Close the application window
     return selected_files
+
+def on_window_close():
+    """Handles window closing event with a confirmation dialog."""
+    confirm = messagebox.askyesno("Exit Confirmation", "Are you sure you want to close without submitting?")
+    if confirm:
+        print("Window closed without submitting files.")
+        selected_files.clear()  # Clear the selected files
+        root.destroy()  # Close the application window
+    else:
+        print("Close action canceled.")
         
 def launch_file_picker():
     """
@@ -35,6 +45,8 @@ def launch_file_picker():
     root = ck.CTk()
     root.title("Multi-File Picker")
     root.geometry("500x300")
+    
+    root.protocol("WM_DELETE_WINDOW", on_window_close)  # Close the application when the window is closed
 
     # Create button to open file dialog
     open_button = ck.CTkButton(root, text="Choose Files", command=open_files)
