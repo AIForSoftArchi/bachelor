@@ -51,6 +51,9 @@ def main():
   answerText = parser.ListWithTextBlockToString(answer.content)
 
   reportList = parser.split_numbered_points(answerText)
+  
+  # This is where I call the function that will pass the reportList to the UI
+  
 
   # Display the results
   for point in reportList:
