@@ -1,5 +1,8 @@
 #Parsing of the response from the API.
 
+## for Reg-ex parsing
+import re
+
 def StringToPrompt(input):
     """
         Creates the prompt that the API should use.
@@ -32,7 +35,7 @@ def strutureJSONToString(input):
         finalstring = finalstring + f"{file['file_path']} \n"
     
 
-    finalstring = finalstring + "\n And following is the code from the files: \n\n"
+    finalstring = finalstring + "\n And following is the code from the files. Each file starts with '### START FILE: <filename> ###' and ends with '### END FILE: <filename> ###'. \n\n"
 
 
     # Give the code from each file.
@@ -41,3 +44,32 @@ def strutureJSONToString(input):
 
 
     return finalstring
+
+def ListWithTextBlockToString(theList):
+    """
+    extracts the text from a List with a TextBlock object inside it.
+
+    param theList: List with a TextBlock object inside it
+
+    output: A string
+    """
+    return theList[0].text
+
+
+def split_numbered_points(text):
+    """
+    Splits a string into a list based on numbers followed by a dot.
+
+    Args:
+        text (string): The input string to split.
+
+    Returns:
+        list: A list of points extracted from the string.
+    """
+
+    pattern = r"(?<!\d)(\d+\.\s.*?)(?=\n\d+\.\s|\Z)"
+
+    # Find all numbered points in the text
+    points = re.findall(pattern, text, re.DOTALL)
+
+    return [point.strip() for point in points]
