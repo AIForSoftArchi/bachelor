@@ -15,12 +15,11 @@ from UI.report_ui import run_failure_report
 def main():
   print("Main started")
   
-  root = ck.CTk()
   # Dynamically determine the base directory of the script
   base_dir = os.path.dirname(os.path.abspath(__file__))  # Gets the script's directory
   
   print("Opening file picker")
-  selected_files = launch_file_picker(root)
+  selected_files = launch_file_picker()
   print("File picker closed")
   
   if not selected_files:
@@ -56,7 +55,9 @@ def main():
 
   reportList = parser.split_numbered_points(answerText)
   
-  run_failure_report(reportList)    
+  print(reportList)
+  
+#   run_failure_report(reportList)    
 
 # This ensures that main() only runs when the script is executed directly
 if __name__ == "__main__":
