@@ -14,8 +14,6 @@ from UI.file_picker_ui import launch_file_picker  # Import the function
 def main():
   print("Main started")
 
-  wow=TestingCodeGeneration()
-  
   # Dynamically determine the base directory of the script
   base_dir = os.path.dirname(os.path.abspath(__file__))  # Gets the script's directory
   
