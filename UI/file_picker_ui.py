@@ -9,7 +9,7 @@ selected_folders = set()
 selected_files = set()
 
 def open_folder():
-    """Opens file dialog and updates UI with selected files."""
+    """Opens folder dialog and updates UI with selected folder and it's files."""
     print("Entered open_folder")
     global selected_files, selected_folders  
 
