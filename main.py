@@ -59,7 +59,8 @@ def main():
 
   reportList = parser.split_numbered_points(answerText)
   
-  print(reportList)
+  for point in reportList:
+      print(f"{point}\n\n")
   
 #   run_failure_report(reportList)    
 
