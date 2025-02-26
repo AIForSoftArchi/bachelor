@@ -4,12 +4,13 @@
 # University: IT-University of Copenhagen
 
 # Our entry point for the execution
-
+import customtkinter as ck
 import file_handler as fh
 import parser
 import api
 import os
 from UI.file_picker_ui import launch_file_picker  # Import the function
+from UI.report_ui import run_failure_report
 
 def main():
   print("Main started")
@@ -17,7 +18,9 @@ def main():
   # Dynamically determine the base directory of the script
   base_dir = os.path.dirname(os.path.abspath(__file__))  # Gets the script's directory
   
+  print("Opening file picker")
   selected_files = launch_file_picker()
+  print("File picker closed")
   
   if not selected_files:
       print("No files selected. Exiting...")
@@ -55,10 +58,10 @@ def main():
   answerText = parser.ListWithTextBlockToString(answer.content)
 
   reportList = parser.split_numbered_points(answerText)
-
-  # Display the results
-  for point in reportList:
-    print(f"{point}\n")
+  
+  print(reportList)
+  
+#   run_failure_report(reportList)    
 
 ## Can be deleted whenever
 def TestingCodeGeneration():

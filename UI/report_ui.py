@@ -21,7 +21,7 @@ class ScrollableFrame(ck.CTkScrollableFrame):
         return [cb.cget("text") for cb in self.checkboxes if cb.get() == 1]
 
 class App(ck.CTk):
-    def __init__(self, failure_list):
+    def __init__(self, failure_list, root=None):
         super().__init__()
         
         self.title("Compliance Report for Software Architecture")
@@ -40,15 +40,18 @@ class App(ck.CTk):
     def generate_report(self):
         """Placeholder function for generating the report."""
         print("Report generation functionality will be implemented later.")
+        
+def run_failure_report(failure_list):
+    """Function to start the application from another script."""
+    
+    
+    print("Before app with failure list")
+    app = App(failure_list)
+    print("After app with failure list")
+    app.mainloop() 
+    print("After mainloop")
 
-# Example input: List of failure descriptions
-failure_descriptions = [
-    "Module A does not follow dependency inversion principle (Located in src/module_a.py:23).",
-    "Service B directly interacts with the database, violating the architecture (Located in src/service_b.py:45).",
-    "Component C is using a hardcoded configuration instead of environment variables (Located in src/component_c.py:12).",
-    "Unapproved library X is used in Module D, violating security policies (Located in src/module_d.py:78)."
-]
+# Only run UI if script is executed directly
+if __name__ == "__main__":
+    run_failure_report()
 
-# Run the app with the given failure descriptions
-app = App(failure_list=failure_descriptions)
-app.mainloop()
