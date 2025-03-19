@@ -13,14 +13,14 @@ from UI.file_picker_ui import launch_file_picker  # Import the function
 from UI.report_ui import run_failure_report
 
 def main():
-  print("Main started")
+  print("Main started\n")
 
   # Dynamically determine the base directory of the script
   base_dir = os.path.dirname(os.path.abspath(__file__))  # Gets the script's directory
   
-  print("Opening file picker")
+  print("\nOpening file picker\n")
   selected_files = launch_file_picker()
-  print("File picker closed")
+  print("\n File picker closed \n")
   
   if not selected_files:
       print("No files selected. Exiting...")
@@ -35,9 +35,9 @@ def main():
           print(f"Warning: Could not convert {path} to a relative path.")
           relative_paths.append(path)  # Fallback to absolute if an error occurs
   
-  print("Processing files:")
-  for path in relative_paths:
-      print(f" - {path}")
+#   print("Processing files:")
+#   for path in relative_paths:
+#       print(f" - {path}")
       
   # Generate full file paths dynamically
   file_paths = [os.path.join(base_dir, rel_path) for rel_path in relative_paths]
@@ -46,14 +46,16 @@ def main():
   tempList = fh.process_files(file_paths)
 
   promptString = parser.strutureJSONToString(tempList)
+  
+#   print("Templist:", tempList)
 
   finalPrompt = parser.StringToPrompt(promptString)
 
-  print(finalPrompt)
+#   print(finalPrompt)
 
   answer = api.CreateComplianceReportArchitecture(finalPrompt)
 
-  print(answer)
+#   print(answer)
 
   answerText = parser.ListWithTextBlockToString(answer.content)
 

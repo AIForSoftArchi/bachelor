@@ -3,6 +3,9 @@
 import json
 import os
 
+# Define file extensions that are relevant for processing
+RELEVANT_EXTENSIONS = {".py", ".cs", ".java", ".js", ".ts", ".cpp", ".c", ".h", ".hpp", ".go", ".rs", ".swift", ".kt"}
+
 def process_files(file_paths):
   """
     Reads one or multiple files and returns a JSON object with relative paths and contents.
@@ -18,7 +21,14 @@ def process_files(file_paths):
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
     for file_name in file_paths:
-        print(f"Processing file: {file_name}")
+        # Extract file extension and check if it's relevant
+        _, file_extension = os.path.splitext(file_name)
+        # print(f"\n Checking file: {file_name} \n")
+        if file_extension.lower() not in RELEVANT_EXTENSIONS:
+          print(f"Skipping irrelevant file: {file_name} \n")
+          continue  # Skip the file
+      
+        print(f"Processing file: {file_name} \n\n\n")
 
         # Check if file exists
         if not os.path.exists(file_name):
@@ -27,10 +37,10 @@ def process_files(file_paths):
 
         # Compute relative path
         relative_path = os.path.relpath(file_name, base_dir)
-        print(f"Relative path: {relative_path}")
+        # print(f"Relative path: {relative_path}")
 
         # Read file content line by line
-        with open(file_name, "r", encoding="utf-8") as file:
+        with open(file_name, "r", encoding="utf-8", errors="replace") as file:
             lines = [line.rstrip('\n') + "\n" for line in file]  # Preserve newlines
 
         # Format JSON for each file
@@ -42,7 +52,7 @@ def process_files(file_paths):
 
         all_files_data.append(json_output)  # Add file data to list
 
-    print(f"All files processed successfully.")
+    print(f"All files processed successfully. Processing a total of {len(all_files_data)} files.")
 
     return all_files_data  # Return the full list of JSON objects
 

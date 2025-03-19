@@ -44,7 +44,7 @@ def submit_files():
     """Returns selected files and closes UI."""
     print("Entered submit_files")
     if selected_files:
-        print("Files Submitted:", list(selected_files))  # Process files as needed
+        # print("Files Submitted:", list(selected_files))  # Process files as needed
         root.destroy()  # Close the application window
     return list(selected_files)
 
