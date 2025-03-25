@@ -4,7 +4,7 @@ import json
 import os
 
 # Define file extensions that are relevant for processing
-RELEVANT_EXTENSIONS = {".py", ".cs", ".java", ".js", ".ts", ".cpp", ".c", ".h", ".hpp", ".go", ".rs", ".swift", ".kt"}
+RELEVANT_EXTENSIONS = {".py", ".cs", ".java", ".js", ".ts", ".cpp", ".c", ".h", ".hpp", ".go", ".rs", ".swift", ".kt", ".cshtml"}
 
 def process_files(file_paths):
   """
