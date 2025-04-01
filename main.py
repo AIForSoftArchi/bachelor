@@ -26,6 +26,7 @@ def main():
       print("No files selected. Exiting...")
       return
   
+  # Generating the IS THIS DOUBLE IN REGARDS TO FILE_HANDLER FILE?
   relative_paths = []
   for path in selected_files:
       try: 
@@ -51,11 +52,9 @@ def main():
   # Extract the text from the response
   answerText = parser.ListWithTextBlockToString(answer.content)
 
-  # Printing the answer into different points, and printing these
-  reportList = parser.split_numbered_points(answerText)
 
-  for point in reportList:
-      print(f"{point}\n\n")
+  # Printing the answer into terminal
+  print(answerText)
 
 # This ensures that main() only runs when the script is executed directly
 if __name__ == "__main__":

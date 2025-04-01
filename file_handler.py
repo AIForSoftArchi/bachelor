@@ -23,7 +23,7 @@ def process_files(file_paths):
     for file_name in file_paths:
         # Extract file extension and check if it's relevant
         _, file_extension = os.path.splitext(file_name)
-        # print(f"\n Checking file: {file_name} \n")
+        
         if file_extension.lower() not in RELEVANT_EXTENSIONS:
           print(f"Skipping irrelevant file: {file_name} \n")
           continue  # Skip the file
@@ -37,7 +37,6 @@ def process_files(file_paths):
 
         # Compute relative path
         relative_path = os.path.relpath(file_name, base_dir)
-        # print(f"Relative path: {relative_path}")
 
         # Read file content line by line
         with open(file_name, "r", encoding="utf-8", errors="replace") as file:
