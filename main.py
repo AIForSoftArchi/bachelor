@@ -26,7 +26,9 @@ def main():
       print("No files selected. Exiting...")
       return
   
-  # Generating the IS THIS DOUBLE IN REGARDS TO FILE_HANDLER FILE?
+  # Generating the IS THIS DOUBLE IN REGARDS TO FILE_HANDLER FILE?(Yes, and no, it is split in file handler later on, but here it has assumed the full path is correct.)
+  # This is for correcting the format of the files, to make sure the file path is correct.
+  # However this should probably not be done in main
   relative_paths = []
   for path in selected_files:
       try: 
@@ -39,7 +41,7 @@ def main():
   # Generate full file paths dynamically
   file_paths = [os.path.join(base_dir, rel_path) for rel_path in relative_paths]
 
-  # Call function with dynamically generated file paths
+  # Call function with dynamically generated file paths, and get the files contents.
   tempList = fh.process_files(file_paths)
 
   # make the prompt into a string, and the format of a prompt.

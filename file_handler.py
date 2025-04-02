@@ -12,7 +12,7 @@ def process_files(file_paths):
 
     param input: List containing file paths
 
-    return: List of a single JSON object that is the prompt.
+    return: List of single JSON object that is a files: path, name, and contents.
   """
   try:
     all_files_data = []  # Store data for multiple files
@@ -40,7 +40,7 @@ def process_files(file_paths):
 
         # Read file content line by line
         with open(file_name, "r", encoding="utf-8", errors="replace") as file:
-            lines = [line.rstrip('\n') + "\n" for line in file]  # Preserve newlines
+            lines = [line.rstrip('\n') + "\n" for line in file]  # Strip all newlines if there are multible, and add only one to the end of line.
 
         # Format JSON for each file
         json_output = {
