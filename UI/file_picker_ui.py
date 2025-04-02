@@ -1,6 +1,7 @@
 import customtkinter as ck
 from tkinter import filedialog, messagebox
 import os
+from pathlib import Path
 
 ck.set_default_color_theme("green")
 ck.set_appearance_mode("light")
@@ -91,7 +92,8 @@ def launch_file_picker():
     # Run the application
     root.mainloop()
 
-    return list(selected_files)  # Return selected files after UI closes
+    #Return the selected files, with them being normalised first.
+    return [str(Path(file).resolve()) for file in selected_files]
 
 # Only run UI if script is executed directly
 if __name__ == "__main__":

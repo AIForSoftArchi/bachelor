@@ -18,7 +18,7 @@ def process_files(file_paths):
     all_files_data = []  # Store data for multiple files
 
     # Get base directory (assumes all files are within a common root folder aka the project itself)
-    base_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.commonpath(file_paths)
 
     for file_name in file_paths:
         # Extract file extension and check if it's relevant
