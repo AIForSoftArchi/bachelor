@@ -130,7 +130,6 @@ def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
             architecture with the code given to you, and return nothing else than the list, 
             where each point in the list corresponds to one single violation of the Onion architecture.
             This list should be as exhaustive as possible, but also as concise as possible. 
-            You should be focusing on dependency flow, layer responsibilities, and domain isolation. 
             Your analysis will be precise and actionable, highlighting only genuine architectural violations, 
             and naming the exact files involved, and the specific principle being violated. 
             If no violations are found, return "No violations found.", and nothing else than this. """)
