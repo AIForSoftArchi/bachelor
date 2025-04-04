@@ -133,7 +133,7 @@ def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
             You should be focusing on dependency flow, layer responsibilities, and domain isolation. 
             Your analysis will be precise and actionable, highlighting only genuine architectural violations, 
             and naming the exact files involved, and the specific principle being violated. 
-            If no violations are found, return "No violations found." """)
+            If no violations are found, return "No violations found.", and nothing else than this. """)
     elif chosen_API == APIChoice.CHATGPT:
         raise NotImplementedError("ChatGPT support is not implemented yet.")
     
