@@ -35,7 +35,6 @@ def main():
   if not selected_files:
     print("No files selected. Exiting...")
     if is_pipeline_run:
-       # INSERT LOGIC THAT GIVES AN ERROR CODE TO THE GITHUB ACTIONS!!!!!!!!!!!!!!
        sys.exit(1)
     return
   
