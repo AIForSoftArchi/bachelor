@@ -6,6 +6,7 @@
 # Our entry point for the execution
 import customtkinter as ck
 import file_handler as fh
+import file_path_getter as fpg
 import parser
 import api
 import os
@@ -14,15 +15,25 @@ from UI.report_ui import run_failure_report
 
 def main():
   print("Main started\n")
-  
-  print("\nOpening file picker\n")
-  selected_files = launch_file_picker()
-  print("\n File picker closed \n")
-  
+
+  # Check if run locally or pipeline
+  is_pipeline_run = os.environ.get("GITHUB_ACTIONS") == "true"
+
+  # get files either from choice(if not github actions), or from working directory (if run by github actions)
+  if is_pipeline_run:
+     # Getting the working directory, and getting the files from this directory.
+     selected_files = fpg.get_files_from_repo_root()
+  else:
+     print("\nOpening file picker\n")
+     selected_files = launch_file_picker()
+     print("\n File picker closed \n")
+     
   # Check if no files are selected, and terminate if true.
   if not selected_files:
-      print("No files selected. Exiting...")
-      return
+    print("No files selected. Exiting...")
+    if is_pipeline_run:
+       # INSERT LOGIC THAT GIVES AN ERROR CODE TO THE GITHUB ACTIONS!!!!!!!!!!!!!!
+    return
   
   # Call function with the file paths, and get the files contents.
   tempList = fh.process_files(selected_files)
