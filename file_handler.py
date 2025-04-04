@@ -12,18 +12,18 @@ def process_files(file_paths):
 
     param input: List containing file paths
 
-    return: List of a single JSON object that is the prompt.
+    return: List of single JSON object that is a files: path, name, and contents.
   """
   try:
     all_files_data = []  # Store data for multiple files
 
     # Get base directory (assumes all files are within a common root folder aka the project itself)
-    base_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.commonpath(file_paths)
 
     for file_name in file_paths:
         # Extract file extension and check if it's relevant
         _, file_extension = os.path.splitext(file_name)
-        # print(f"\n Checking file: {file_name} \n")
+        
         if file_extension.lower() not in RELEVANT_EXTENSIONS:
           print(f"Skipping irrelevant file: {file_name} \n")
           continue  # Skip the file
@@ -37,11 +37,10 @@ def process_files(file_paths):
 
         # Compute relative path
         relative_path = os.path.relpath(file_name, base_dir)
-        # print(f"Relative path: {relative_path}")
 
         # Read file content line by line
         with open(file_name, "r", encoding="utf-8", errors="replace") as file:
-            lines = [line.rstrip('\n') + "\n" for line in file]  # Preserve newlines
+            lines = [line.rstrip('\n') + "\n" for line in file]  # Strip all newlines if there are multible, and add only one to the end of line.
 
         # Format JSON for each file
         json_output = {

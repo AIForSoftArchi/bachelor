@@ -14,32 +14,18 @@ from UI.report_ui import run_failure_report
 
 def main():
   print("Main started\n")
-
-  # Dynamically determine the base directory of the script
-  base_dir = os.path.dirname(os.path.abspath(__file__))  # Gets the script's directory
   
   print("\nOpening file picker\n")
   selected_files = launch_file_picker()
   print("\n File picker closed \n")
   
+  # Check if no files are selected, and terminate if true.
   if not selected_files:
       print("No files selected. Exiting...")
       return
   
-  relative_paths = []
-  for path in selected_files:
-      try: 
-          relative_path = os.path.relpath(path, base_dir)
-          relative_paths.append(relative_path)
-      except ValueError:
-          print(f"Warning: Could not convert {path} to a relative path.")
-          relative_paths.append(path)  # Fallback to absolute if an error occurs
-      
-  # Generate full file paths dynamically
-  file_paths = [os.path.join(base_dir, rel_path) for rel_path in relative_paths]
-
-  # Call function with dynamically generated file paths
-  tempList = fh.process_files(file_paths)
+  # Call function with the file paths, and get the files contents.
+  tempList = fh.process_files(selected_files)
 
   # make the prompt into a string, and the format of a prompt.
   promptString = parser.strutureJSONToString(tempList)
@@ -51,11 +37,9 @@ def main():
   # Extract the text from the response
   answerText = parser.ListWithTextBlockToString(answer.content)
 
-  # Printing the answer into different points, and printing these
-  reportList = parser.split_numbered_points(answerText)
 
-  for point in reportList:
-      print(f"{point}\n\n")
+  # Printing the answer into terminal
+  print(answerText)
 
 # This ensures that main() only runs when the script is executed directly
 if __name__ == "__main__":
