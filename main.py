@@ -10,8 +10,11 @@ import file_path_getter as fpg
 import parser
 import api
 import os
+import sys
 from UI.file_picker_ui import launch_file_picker  # Import the function
 from UI.report_ui import run_failure_report
+
+is_pipeline_run = bool
 
 def main():
   print("Main started\n")
@@ -33,6 +36,7 @@ def main():
     print("No files selected. Exiting...")
     if is_pipeline_run:
        # INSERT LOGIC THAT GIVES AN ERROR CODE TO THE GITHUB ACTIONS!!!!!!!!!!!!!!
+       sys.exit(1)
     return
   
   # Call function with the file paths, and get the files contents.
@@ -49,8 +53,19 @@ def main():
   answerText = parser.ListWithTextBlockToString(answer.content)
 
 
-  # Printing the answer into terminal
-  print(answerText)
+  # Printing the answer into terminal, and setting status
+  report_status(answerText)
+
+def report_status(response):
+    if response == "No violations found." :
+        print("✅ No violations found.")
+        if is_pipeline_run :
+          sys.exit(0)
+    else:
+        print(f"❌ Found these violations in the project:\n")
+        print(response)
+        if is_pipeline_run :
+          sys.exit(1)
 
 # This ensures that main() only runs when the script is executed directly
 if __name__ == "__main__":
