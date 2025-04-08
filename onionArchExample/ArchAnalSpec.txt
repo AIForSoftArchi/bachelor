@@ -1,3 +1,2 @@
 # this is a comment, that is excluded
-Application/Models
-Infrastructure\Data
+Domain/entities
