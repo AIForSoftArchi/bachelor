@@ -12,7 +12,6 @@ def get_files_from_repo_root() :
 
    # Find the root of the repository.
    repo_root = Path(os.environ.get("GITHUB_WORKSPACE", os.getcwd())).resolve()
-   print(f"The found Repo root is: {repo_root}")
 
    # List of folder names we want to include
    desired_folders = getArchAnalSpecification(repo_root)
