@@ -1,0 +1,2 @@
+# this is a comment, that is excluded
+Domain/entities
