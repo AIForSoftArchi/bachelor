@@ -117,30 +117,3 @@ def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
     else:
         raise ValueError(f"Invalid API choice: {chosen_API}")
     
-# If interested, we have also added this function to fix the violations, by
-# giving the previous conversation as input.
-def CreateCodeArchitectureFix(input_list, chosen_API=APIChoice.CLAUDE):
-    """
-    This function is for correcting the violations, found from the complaince report.
-
-    input:
-        input_list: List of Json file objects, that is a previous conversation with an AI, that has user and assistant text messages.
-        chosen_API: ENum, which API should be used to create this. Default is Claude.
-
-    returns: The corrected code from Claude(A list with a TextBlock inside it), or None if error occurs
-    """
-    if chosen_API == APIChoice.CLAUDE:
-        return ClaudeAPI(input_list, """I earlier gave you some code files, where I started by giving the relative path, and then the code. 
-                         You then gave feedback on what architecture violations existed in accordance to the "Onion" Architecture.
-                         You shall now return a corrected version of the code, where the points, that was asked to be fixed by the user, is given back to you. 
-                         You shall NOT change anything in the code, that is not part of one of the points specified by the user.
-                         You shall return all the code files given to you originally, also the ones that you have not made any architecturally changes to, but also the ones you have made architecturally changes to.
-                         You shall also return the relative paths of all the files, both the ones you have changed the location of due to architectural changes, and the ones you haven't.
-                         You shall start by giving the relative paths, and then the code.
-                         You shall NOT return anything other than specified here, so no explaination of why this is done, or anything like this.
-                         If no points are given by the user, return "No changes to the code" """)
-    elif chosen_API == APIChoice.CHATGPT:
-        raise NotImplementedError("ChatGPT support is not implemented yet.")
-    
-    else:
-        raise ValueError(f"Invalid API choice: {chosen_API}")
