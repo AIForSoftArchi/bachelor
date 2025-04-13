@@ -10,11 +10,6 @@ def StringToPrompt(input):
     """
     return [{"role": "user", "content": input } ]
 
-def StringToJSONList(inputString, seperator = None):
-    tempList = inputString.splitlines()
-    
-
-
 def strutureJSONToString(input):
     """ 
         This function prepares the code and code structure for the API.
