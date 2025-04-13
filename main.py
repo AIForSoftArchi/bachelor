@@ -66,7 +66,7 @@ def main():
 
 def report_status(response):
     """ This function checks the type of response recieved, and prints accordingly """
-    if response == "No violations found." :
+    if "No violations found" in response :
         if is_pipeline_run :
           print("::notice:: ✅ No violations found.")
           write_summary("✅ No violations found. \n" + response)
