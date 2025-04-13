@@ -33,9 +33,10 @@ def main():
      
   # Check if no files are selected, and terminate if true.
   if not selected_files:
-    print("No files selected. Exiting...")
     if is_pipeline_run:
+       print(f"::error:: No files selected!\n")
        sys.exit(1)
+    print("No files selected. Exiting...")
     return
   
   # Call function with the file paths, and get the files contents.
@@ -48,6 +49,14 @@ def main():
   # Here is the call to the API, that returns an answer
   answer = api.CreateComplianceReportArchitecture(finalPrompt)
 
+  # Check if the response from the API, is empty, due to an error.
+  if answer == None :
+    if is_pipeline_run:
+       print(f"::error:: An error occured, that made the API return None.!\n")
+       sys.exit(1)
+    print("An error occured, that made the API return None.")
+    return
+
   # Extract the text from the response
   answerText = parser.ListWithTextBlockToString(answer.content)
 
@@ -57,16 +66,18 @@ def main():
 
 def report_status(response):
     if response == "No violations found." :
-        print("::notice:: ✅ No violations found.")
         if is_pipeline_run :
-          write_summary("✅ No violations found.")
+          print("::notice:: ✅ No violations found.")
+          write_summary("✅ No violations found. \n" + response)
           sys.exit(0)
+        print("✅ No violations found.")
     else:
-        print(f"::error::❌ Found architectural violations in the project!\n")
-        print(response)
         if is_pipeline_run :
-          write_summary(f"❌ Found these violations in the project:\n" + response)
+          print("❌ Found architectural violations in the project!\n")
+          write_summary("❌ Found these violations in the project:\n" + response)
           sys.exit(1)
+        print("❌ Found architectural violations in the project!\n")
+        print(response)
 
 def write_summary(summary_text: str):
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
