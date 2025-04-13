@@ -12,14 +12,14 @@ import api
 import os
 import sys
 from UI.file_picker_ui import launch_file_picker  # Import the function
-from UI.report_ui import run_failure_report
 
-is_pipeline_run = bool
+is_pipeline_run = False # False as standard.
 
 def main():
   print("Main started\n")
 
   # Check if run locally or pipeline
+  global is_pipeline_run
   is_pipeline_run = os.environ.get("GITHUB_ACTIONS") == "true"
 
   # get files either from choice(if not github actions), or from working directory (if run by github actions)
@@ -78,7 +78,8 @@ def report_status(response):
           print("::notice:: ✅ No violations found.")
           write_summary("✅ No violations found. \n" + response)
           sys.exit(0)
-        print("✅ No violations found.")
+        print("✅ No violations found. \n")
+        print(response)
     else:
         if is_pipeline_run :
           print("❌ Found architectural violations in the project!\n")
