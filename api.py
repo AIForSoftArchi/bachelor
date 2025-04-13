@@ -1,4 +1,4 @@
-# LLM API interaction
+# File for LLM API interaction. 
 
 ## For error handling
 import requests
@@ -88,29 +88,6 @@ def ClaudeAPI(input_list, assistant_settings=None):
         messages= input_list
     )
 
-def CreateComplianceReportSyntax(input_list, chosen_API=APIChoice.CLAUDE):
-    """
-    This function is for checking the syntx of code
-
-    input:
-        input_list: List of Json file objects, that is one or more user and assistant text messages
-        chosen_API: ENum, which API should be used to create this. Default is Claude.
-
-    returns: A list with a TextBlock inside it, where the textblock is a list of what is synactically wrong with the code.
-    """
-    if chosen_API == APIChoice.CLAUDE:
-        return ClaudeAPI(input_list, """You are also a master at analysing the compliance of code, 
-                         in accordance to if it is syntactically correct.
-                         You shall return a list of what is syntactically wrong with the code given to you, and return nothing else than the list, 
-                         where each point in the list corresponds to one single syntactically incorrect mistake. 
-                         Do not mix content between files, unless doing so for the purpose of upholding the principles of software architecture, 
-                         and explicitly asked to do so.""")
-    elif chosen_API == APIChoice.CHATGPT:
-        raise NotImplementedError("ChatGPT support is not implemented yet.")
-    
-    else:
-        raise ValueError(f"Invalid API choice: {chosen_API}")
-
 def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
     """
     This function is for creating the Compliance report
@@ -140,7 +117,8 @@ def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
     else:
         raise ValueError(f"Invalid API choice: {chosen_API}")
     
-
+# If interested, we have also added this function to fix the violations, by
+# giving the previous conversation as input.
 def CreateCodeArchitectureFix(input_list, chosen_API=APIChoice.CLAUDE):
     """
     This function is for correcting the violations, found from the complaince report.

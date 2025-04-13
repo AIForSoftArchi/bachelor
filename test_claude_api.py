@@ -1,3 +1,5 @@
+# Supporting file for testing of the errors from the API.
+
 # Import necessary modules
 import anthropic
 import os

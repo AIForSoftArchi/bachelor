@@ -42,6 +42,13 @@ def main():
   # Call function with the file paths, and get the files contents.
   tempList = fh.process_files(selected_files)
 
+  if tempList == None:
+    if is_pipeline_run:
+      print(f"::error:: An error occured during file reading!\n")
+      sys.exit(1)
+    print("An error occured during file reading!")
+    return
+
   # make the prompt into a string, and the format of a prompt.
   promptString = parser.strutureJSONToString(tempList)
   finalPrompt = parser.StringToPrompt(promptString)

@@ -1,3 +1,5 @@
+# Here is the UI for when the code is run mannualy, and we need to select the wanted folders for the analysis.
+
 import customtkinter as ck
 from tkinter import filedialog, messagebox
 import os
