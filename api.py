@@ -28,6 +28,7 @@ from enum import Enum
 class APIChoice(Enum):
     CLAUDE = "Claude"
     CHATGPT = "ChatGPT"
+    # Other API options should be added here.
 
 def error_handling_wrapper(api_function, *args, **kwargs):
     """
@@ -132,7 +133,7 @@ def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
             This list should be as exhaustive as possible, but also as concise as possible. 
             Your analysis will be precise and actionable, highlighting only genuine architectural violations, 
             and naming the exact files involved, and the specific principle being violated. 
-            If no violations are found, return "No violations found.", and nothing else than this. """)
+            If no violations are found, return "No violations found.", and how the code adheres to the onion architecture. """)
     elif chosen_API == APIChoice.CHATGPT:
         raise NotImplementedError("ChatGPT support is not implemented yet.")
     

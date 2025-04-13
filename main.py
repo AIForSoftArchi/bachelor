@@ -65,6 +65,7 @@ def main():
   report_status(answerText)
 
 def report_status(response):
+    """ This function checks the type of response recieved, and prints accordingly """
     if response == "No violations found." :
         if is_pipeline_run :
           print("::notice:: ✅ No violations found.")
@@ -80,6 +81,7 @@ def report_status(response):
         print(response)
 
 def write_summary(summary_text: str):
+    """ Creates the Github Summary, for the pipeline. """
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary_path and summary_text:
         with open(summary_path, "a", encoding="utf-8") as f:
