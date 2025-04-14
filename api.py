@@ -18,7 +18,7 @@ anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
 import anthropic
 
 
-### checking if the API key is correctly loaded
+### Checks if the API key is loaded correctly
 if not anthropic_api_key:
     raise ValueError("anthropic API Key Not Found! Make sure to set it in the .env file.")
 

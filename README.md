@@ -75,7 +75,7 @@ python main.py
 ### integrating into a Github pipeline
 
 To integrate into a pipeline, the project can be put in the same github repository as the code that should be analysed.
-The project automaticcaly detects if it is run by a pipeline, or manually, so everything that is needed is to setup a yaml file, to make the analysis happen when desired.
+The project automatically detects if it is run by a pipeline, or manually, so everything that is needed is to setup a yaml file, to make the analysis happen when desired.
 Under here is an example of a yaml file, from a github repository that has saved our project in a folder called _.scripts_ , and the analysis is run on every push and pull request:
 
 ```yaml
