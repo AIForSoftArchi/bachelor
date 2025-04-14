@@ -1,3 +1,6 @@
+# This file is for getting the desired paths, when run by github pipelines.
+# Also handles reading of AnalArchSpec file.
+
 import os
 from pathlib import Path
 
@@ -62,7 +65,7 @@ def getArchAnalSpecification(repo_root):
     Reads desired folder names from a file named 'ArchAnalSpec' located in the repo root.
     Each line in the file represents a relative folder path (e.g., 'Application/Models').
 
-    Return: A set of Path objects representing the desired folders.
+    Return: A set of Path objects representing the desired folders, or an empty set.
     """
     spec_file = Path(repo_root / "ArchAnalSpec.txt").resolve()
     if not spec_file.exists():

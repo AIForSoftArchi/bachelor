@@ -1,4 +1,4 @@
-# LLM API interaction
+# File for LLM API interaction. 
 
 ## For error handling
 import requests
@@ -18,7 +18,7 @@ anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
 import anthropic
 
 
-### checking if the API key is correctly loaded
+### Checks if the API key is loaded correctly
 if not anthropic_api_key:
     raise ValueError("anthropic API Key Not Found! Make sure to set it in the .env file.")
 
@@ -28,6 +28,7 @@ from enum import Enum
 class APIChoice(Enum):
     CLAUDE = "Claude"
     CHATGPT = "ChatGPT"
+    # Other API options should be added here.
 
 def error_handling_wrapper(api_function, *args, **kwargs):
     """
@@ -87,29 +88,6 @@ def ClaudeAPI(input_list, assistant_settings=None):
         messages= input_list
     )
 
-def CreateComplianceReportSyntax(input_list, chosen_API=APIChoice.CLAUDE):
-    """
-    This function is for checking the syntx of code
-
-    input:
-        input_list: List of Json file objects, that is one or more user and assistant text messages
-        chosen_API: ENum, which API should be used to create this. Default is Claude.
-
-    returns: A list with a TextBlock inside it, where the textblock is a list of what is synactically wrong with the code.
-    """
-    if chosen_API == APIChoice.CLAUDE:
-        return ClaudeAPI(input_list, """You are also a master at analysing the compliance of code, 
-                         in accordance to if it is syntactically correct.
-                         You shall return a list of what is syntactically wrong with the code given to you, and return nothing else than the list, 
-                         where each point in the list corresponds to one single syntactically incorrect mistake. 
-                         Do not mix content between files, unless doing so for the purpose of upholding the principles of software architecture, 
-                         and explicitly asked to do so.""")
-    elif chosen_API == APIChoice.CHATGPT:
-        raise NotImplementedError("ChatGPT support is not implemented yet.")
-    
-    else:
-        raise ValueError(f"Invalid API choice: {chosen_API}")
-
 def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
     """
     This function is for creating the Compliance report
@@ -132,36 +110,10 @@ def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
             This list should be as exhaustive as possible, but also as concise as possible. 
             Your analysis will be precise and actionable, highlighting only genuine architectural violations, 
             and naming the exact files involved, and the specific principle being violated. 
-            If no violations are found, return "No violations found.", and nothing else than this. """)
+            If no violations are found, return "No violations found.", and how the code adheres to the onion architecture. """)
     elif chosen_API == APIChoice.CHATGPT:
         raise NotImplementedError("ChatGPT support is not implemented yet.")
     
     else:
         raise ValueError(f"Invalid API choice: {chosen_API}")
     
-
-def CreateCodeArchitectureFix(input_list, chosen_API=APIChoice.CLAUDE):
-    """
-    This function is for correcting the violations, found from the complaince report.
-
-    input:
-        input_list: List of Json file objects, that is a previous conversation with an AI, that has user and assistant text messages.
-        chosen_API: ENum, which API should be used to create this. Default is Claude.
-
-    returns: The corrected code from Claude(A list with a TextBlock inside it), or None if error occurs
-    """
-    if chosen_API == APIChoice.CLAUDE:
-        return ClaudeAPI(input_list, """I earlier gave you some code files, where I started by giving the relative path, and then the code. 
-                         You then gave feedback on what architecture violations existed in accordance to the "Onion" Architecture.
-                         You shall now return a corrected version of the code, where the points, that was asked to be fixed by the user, is given back to you. 
-                         You shall NOT change anything in the code, that is not part of one of the points specified by the user.
-                         You shall return all the code files given to you originally, also the ones that you have not made any architecturally changes to, but also the ones you have made architecturally changes to.
-                         You shall also return the relative paths of all the files, both the ones you have changed the location of due to architectural changes, and the ones you haven't.
-                         You shall start by giving the relative paths, and then the code.
-                         You shall NOT return anything other than specified here, so no explaination of why this is done, or anything like this.
-                         If no points are given by the user, return "No changes to the code" """)
-    elif chosen_API == APIChoice.CHATGPT:
-        raise NotImplementedError("ChatGPT support is not implemented yet.")
-    
-    else:
-        raise ValueError(f"Invalid API choice: {chosen_API}")

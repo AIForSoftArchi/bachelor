@@ -1,4 +1,4 @@
-# File handling (read/write)
+# File handling (reading of the paths given)
 
 import json
 import os
