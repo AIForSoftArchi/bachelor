@@ -1,6 +1,5 @@
 # File handling (reading of the paths given)
 
-import json
 import os
 
 # Define file extensions that are relevant for processing
