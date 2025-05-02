@@ -54,7 +54,7 @@ def main():
   finalPrompt = parser.StringToPrompt(promptString)
 
   # Here is the call to the API, that returns an answer
-  answer = api.CreateComplianceReportArchitecture(finalPrompt)
+  answer = api.AnalyzeArchitectureAdherence(finalPrompt)
 
   # Check if the response from the API, is empty, due to an error.
   if answer == None :
