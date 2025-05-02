@@ -82,26 +82,13 @@ def ClaudeAPI(input_list, assistant_settings=None):
     return error_handling_wrapper(
         client.messages.create,
         model="claude-3-5-sonnet-20241022",
-        max_tokens=8192,
+        max_tokens=2000,
         temperature=0,
-        system=f"You are a world-class programmer. {assistant_settings}",
+        system=f"{assistant_settings}",
         messages= input_list
     )
 
-def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
-    """
-    This function is for creating the Compliance report
-
-    input:
-        input_list: List of Json file objects, that is one or more user and assistant text messages
-        chosen_API: ENum, which API should be used to create this. Default is Claude.
-
-    returns: an Compliance report from Claude(A list with a TextBlock inside it), or None if error occurs
-    """
-    if chosen_API == APIChoice.CLAUDE:
-        return ClaudeAPI(
-            input_list, 
-            """I will give you some code files, where I will start by giving the relative path, and then the code. 
+DEFAULT_SYSTEM_PROMPT = """You are a world-class software architect. I will give you some code files, where I will start by giving the relative path, and then the code. 
             Each file starts with '### START FILE: <filename> ###' and ends with '### END FILE: <filename> ###'. 
             You should now decide if these files and their placement in the folders have compliance of the code architecture "Onion", 
             in accordance to if it upholds these standards. You shall return a list of what is wrong according to the "Onion" 
@@ -110,10 +97,23 @@ def CreateComplianceReportArchitecture(input_list, chosen_API=APIChoice.CLAUDE):
             This list should be as exhaustive as possible, but also as concise as possible. 
             Your analysis will be precise and actionable, highlighting only genuine architectural violations, 
             and naming the exact files involved, and the specific principle being violated. 
-            If no violations are found, return "No violations found.", and how the code adheres to the onion architecture. """)
+            If no violations are found, return "No violations found.", and how the code adheres to the onion architecture. """
+
+def AnalyzeArchitectureAdherence(input_list, chosen_API=APIChoice.CLAUDE, system_prompt=DEFAULT_SYSTEM_PROMPT):
+    """
+    This function is for calling the API that will analyse the code from the prompt in the input_list.
+
+    input:
+        input_list: List of Json file objects, that is one or more user and assistant text messages
+        chosen_API: ENum, which API should be used to create this. Default is Claude.
+        system_prompt: How the API should behave, via a system prompt. Default is the string DEFAULT_SYSTEM_PROMPT
+
+    returns: an assesment of if the codebase adheres to a specified architecture, in an API response(A list with a TextBlock inside it), or None if error occurs
+    """
+    if chosen_API == APIChoice.CLAUDE:
+        return ClaudeAPI(input_list, system_prompt)
     elif chosen_API == APIChoice.CHATGPT:
         raise NotImplementedError("ChatGPT support is not implemented yet.")
-    
     else:
         raise ValueError(f"Invalid API choice: {chosen_API}")
     
