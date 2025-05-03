@@ -97,7 +97,7 @@ DEFAULT_SYSTEM_PROMPT = """You are a world-class software architect. I will give
             This list should be as exhaustive as possible, but also as concise as possible. 
             Your analysis will be precise and actionable, highlighting only genuine architectural violations, 
             and naming the exact files involved, and the specific principle being violated. 
-            If no violations are found, return "No violations found.", and how the code adheres to the onion architecture. """
+            If no violations are found, start your response with returning explicitly the sentence "No violations found.", followed by how the code adheres to the onion architecture. """
 
 def AnalyzeArchitectureAdherence(input_list, chosen_API=APIChoice.CLAUDE, system_prompt=DEFAULT_SYSTEM_PROMPT):
     """
