@@ -23,19 +23,19 @@ def strutureJSONToString(input):
     input = sorted(input, key=lambda x: x["file_path"])
 
     amountOfElements = len(input)
-    finalstring = f"I have {amountOfElements} files I am giving you here. First I will give you the relative paths for the files, and then I will give the code in these files. \n"
+    finalstring = f"I have {amountOfElements} files I will provide for you to analyze. \n"
 
     # Give the relative paths
-    for file in input:
-        finalstring = finalstring + f"{file['file_path']} \n"
+    # for file in input:
+    #     finalstring = finalstring + f"{file['file_path']} \n"
     
 
-    finalstring = finalstring + "\n And following is the code from the files. \n\n"
+    # finalstring = finalstring + "\n And following is the code from the files. \n\n"
 
 
     # Give the code from each file.
     for file in input:
-        finalstring = finalstring + f"### START FILE: {file['file_name']} ###\n{file['contents']} \n### END FILE: {file['file_name']} ###\n\n"
+        finalstring = finalstring + f"### START FILE: {file['file_path']} ###\n{file['contents']} \n### END FILE: {file['file_path']} ###\n\n"
 
 
     return finalstring

@@ -51,6 +51,8 @@ def process_files(file_paths):
         all_files_data.append(json_output)  # Add file data to list
 
     print(f"All files processed successfully. Processing a total of {len(all_files_data)} files.")
+    
+    # print("printing all_files_data", all_files_data)
 
     return all_files_data  # Return the full list of JSON objects
 

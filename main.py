@@ -52,6 +52,8 @@ def main():
   # make the prompt into a string, and the format of a prompt.
   promptString = parser.strutureJSONToString(tempList)
   finalPrompt = parser.StringToPrompt(promptString)
+  
+  print("Printing FinalPrompt", finalPrompt)
 
   # Here is the call to the API, that returns an answer
   answer = api.AnalyzeArchitectureAdherence(finalPrompt)
